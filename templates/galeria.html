@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Galeria</h2>
+
+<div class="photo-gallery">
+    {% for photo in photos %}
+    <img src="{{ photo.image.url }}" alt="Uploaded Image" class="img-fluid">
+    {% endfor %}
+</div>
+
+<!-- Botão para gerar o flipbook -->
+<button id="btnGenerateFlipbook" class="btn btn-primary">Gerar Flipbook</button>
+
+<!-- Contêiner do flipbook, inicialmente oculto -->
+<div id="flipbook-container" style="display:none; width: 800px; height: 600px;">
+    <div id="flipbook">
+        {% for photo in photos %}
+        <div class="page" style="background: url('{{ photo.image.url }}'); background-size: cover;"></div>
+        {% endfor %}
+    </div>
+</div>
+
+<script>
+$(document).ready(function() {
+    $('#btnGenerateFlipbook').click(function() {
+        $('#flipbook-container').show(); // Mostra o contêiner do flipbook
+        initFlipbook();
+    });
+
+    function initFlipbook() {
+        console.log('Inicializando o flipbook...');
+        $("#flipbook").turn({
+            width: 800,
+            height: 600,
+            autoCenter: true
+        });
+    }
+});
+
+
+</script>
+{% endblock %}
